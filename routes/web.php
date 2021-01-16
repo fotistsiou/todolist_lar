@@ -18,14 +18,18 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/newtodo', [TodosController::class, 'index'])->name('newtodo');
-Route::get('/todos', [TodosController::class, 'todos'])->name('todos');
-Route::post('/newtodo', [TodosController::class, 'newtodo'])->name('newtodo');
-Route::get('/toggle', [TodosController::class, 'toggle'])->name('toggle');
-Route::get('/del', [TodosController::class, 'delTodo'])->name('delTodo');
-Route::get('/todo', [TodosController::class, 'todo'])->name('todo');
-Route::get('/edit', [TodosController::class, 'showTodo'])->name('edit');
-Route::post('/edited', [TodosController::class, 'update'])->name('edited');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/newtodo', [TodosController::class, 'index'])->name('newtodo');
+    Route::get('/todos', [TodosController::class, 'todos'])->name('todos');
+    Route::post('/newtodo', [TodosController::class, 'newtodo'])->name('newtodo');
+    Route::get('/toggle', [TodosController::class, 'toggle'])->name('toggle');
+    Route::get('/del', [TodosController::class, 'delTodo'])->name('delTodo');
+    Route::get('/todo', [TodosController::class, 'todo'])->name('todo');
+    Route::get('/edit', [TodosController::class, 'showTodo'])->name('edit');
+    Route::post('/edited', [TodosController::class, 'update'])->name('edited');
+});
 
 Auth::routes();
